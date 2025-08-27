@@ -1,6 +1,6 @@
 import { App } from "./app";
-import { TariffController } from "./controllers/tariffmeta.controller";
-import { TariffJob } from "./job/tariff.job";
+import { TariffController } from "./tariff/controllers/tariff.controller";
+import { TariffJob } from "./tariff/jobs/tariff.job";
 
 const app = new App([new TariffController()]);
 

@@ -1,8 +1,8 @@
 import axios from "axios"
-import { ConfigService } from "../config/config.service"
+import { ConfigService } from "../config/env/config.service"
 
 export class ApiClient {
-   constructor(private readonly configService: ConfigService) {}
+    constructor(private readonly configService: ConfigService) {}
 
     async getTariffs() {
         const response = await axios.get(
@@ -15,7 +15,7 @@ export class ApiClient {
                     date: new Date().toISOString().split("T")[0]
                 }
             },
-            
+
         )
 
         return response.data

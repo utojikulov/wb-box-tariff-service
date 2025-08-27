@@ -1,20 +1,24 @@
+import { ConfigService } from "../config/env/config.service";
 import { Knex } from "knex"
+
+const configService = new ConfigService()
 
 const knexConfig: { [key: string]: Knex.Config } = {
     development: {
         client: 'pg',
         connection: {
-            host: 'db',
+            host: configService.get('DB_HOST') ?? 'localhost',
             port: 5432,
-            database: 'postgres',
-            user: 'postgres',
-            password: 'postgres'
+            database: configService.get('DB_NAME') ?? 'postgres',
+            user: configService.get('DB_USER') ?? 'postgres',
+            password: configService.get('DB_PWD') ?? 'postgres'
         },
         migrations: {
-            directory: "./migrations"
+            directory: "./src/knex/migrations",
+            extension: "ts"
         },
         seeds: {
-            directory: "./seeds"
+            directory: "./src/knex/seeds"
         }
     }
 }

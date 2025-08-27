@@ -1,4 +1,4 @@
-import { KnexService } from "../knex/knex.service";
+import { KnexService } from "../../knex/knex.service";
 
 export class WareHouseRepository {
    private db;

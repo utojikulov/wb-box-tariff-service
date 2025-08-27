@@ -12,7 +12,4 @@ export class KnexService {
         }
         return KnexService.instance;
     }
-
-
 }
-

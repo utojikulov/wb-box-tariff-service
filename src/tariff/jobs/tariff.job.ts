@@ -1,6 +1,6 @@
 import nodeCron from "node-cron";
-import { ApiClient } from "../client/api.client";
-import { ConfigService } from "../config/config.service";
+import { ApiClient } from "../../client/api.client";
+import { ConfigService } from "../../config/env/config.service";
 import { TariffService } from "../services/tariff.service";
 
 export class TariffJob {

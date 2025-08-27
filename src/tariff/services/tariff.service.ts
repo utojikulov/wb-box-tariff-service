@@ -1,13 +1,13 @@
-import { ITariffMeta, IWarehouseList } from "../common/types/tariffmeta.interface";
-import { TariffMetaRepo } from "../repositories/tariffmeta.repository";
+import { ITariffMeta } from "../../common/types/tariffmeta.interface";
+import { TariffRepo } from "../repositories/tariff.repository";
 import { WareHouseRepository } from "../repositories/warehouse.repository";
 
 export class TariffService {
-    metaReop: TariffMetaRepo;
+    metaReop: TariffRepo;
     warehouseRepo: WareHouseRepository;
 
     constructor() {
-        this.metaReop = new TariffMetaRepo();
+        this.metaReop = new TariffRepo();
         this.warehouseRepo = new WareHouseRepository();
     }
 
@@ -15,7 +15,6 @@ export class TariffService {
     async save(data: ITariffMeta) {
         const { dtNextBox, dtTillMax, warehouseList } = data;
 
-        console.log(dtNextBox, dtTillMax)
         let meta = await this.metaReop.findByDate(dtNextBox);
         if (!meta) {
             meta = await this.metaReop.create({
@@ -59,12 +58,10 @@ export class TariffService {
                 box_storage_coef_expr: warehouse.boxStorageCoefExpr,
                 box_storage_liter: warehouse.boxStorageLiter,
             };
-            console.log(warehouse)
 
             const data_prep = normalizingObj(raw_data)
 
             if (existing) {
-                console.log(existing)
                 await this.warehouseRepo.update(existing.id, data_prep);
             } else {
                 await this.warehouseRepo.create(meta.id, data_prep);

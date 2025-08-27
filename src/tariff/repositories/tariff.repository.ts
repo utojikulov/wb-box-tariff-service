@@ -1,6 +1,6 @@
-import { KnexService } from "../knex/knex.service"
+import { KnexService } from "../../knex/knex.service"
 
-export class TariffMetaRepo {
+export class TariffRepo {
     private db
 
     constructor() {
