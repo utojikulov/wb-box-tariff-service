@@ -1,16 +1,18 @@
 import knex, { Knex } from "knex";
-import { knexConfig } from "./knexfile";
+import knexConfig from "./knexfile";
 
 export class KnexService {
-  private static instance: Knex | null = null;
+    private static instance: Knex | null = null;
 
-  private constructor() {}
+    private constructor() {}
 
-  public static getConnection(): Knex {
-    if (!KnexService.instance) {
-      KnexService.instance = knex(knexConfig.development);
+    public static getConnection(): Knex {
+        if (!KnexService.instance) {
+            KnexService.instance = knex(knexConfig.development);
+        }
+        return KnexService.instance;
     }
-    return KnexService.instance;
-  }
+
+
 }
 

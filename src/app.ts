@@ -1,12 +1,12 @@
 import express, { Application } from "express";
 
 export class App {
-    private app: Application
-    private port: number
+   private app: Application;
+   private port: number;
 
-    constructor(routes: any[], port: number = 3333) {
-        this.app = express()
-        this.port = port
+   constructor(routes: any[], port: number = 3333) {
+      this.app = express();
+      this.port = port;
 
     }
 
