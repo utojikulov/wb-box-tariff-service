@@ -1,5 +1,6 @@
 import type { Knex } from "knex";
 
+// TODO id to uuid 
 
 export async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable("tariff_meta", (table) => {
@@ -20,7 +21,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string("warehouse_name").notNullable()
         table.string("geo_name").notNullable()
 
-        table.decimal("box_delivery_base", 10, 2).notNullable()
+        table.decimal("box_delivery_base", 10, 2).notNullable();
         table.decimal("box_delivery_coef_expr", 10, 2).notNullable()
         table.decimal("box_delivery_liter", 10, 2).notNullable()
 
