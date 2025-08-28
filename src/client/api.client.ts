@@ -2,7 +2,11 @@ import axios from "axios"
 import { ConfigService } from "../config/env/config.service"
 
 export class ApiClient {
-    constructor(private readonly configService: ConfigService) {}
+    private configService: ConfigService
+
+    constructor() {
+        this.configService = new ConfigService() 
+    }
 
     async getTariffs() {
         const response = await axios.get(

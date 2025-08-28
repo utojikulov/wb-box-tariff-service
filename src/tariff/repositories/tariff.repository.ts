@@ -16,4 +16,11 @@ export class TariffRepo {
         const [created] = await this.db("tariff_meta").insert(meta).returning("*");
         return created;
     }
+
+    async getTariffsSorted() {
+        return this.db("warehouse_tariffs").
+            // .join()
+            // .select()
+            // .orderBy();
+    }
 }

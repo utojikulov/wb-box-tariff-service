@@ -1,6 +1,5 @@
 import nodeCron from "node-cron";
 import { ApiClient } from "../../client/api.client";
-import { ConfigService } from "../../config/env/config.service";
 import { TariffService } from "../services/tariff.service";
 
 export class TariffJob {
@@ -8,8 +7,7 @@ export class TariffJob {
     private tariffService: TariffService;
 
     constructor() {
-        const configService = new ConfigService();
-        this.apiClient = new ApiClient(configService);
+        this.apiClient = new ApiClient();
         this.tariffService = new TariffService();
     }
 

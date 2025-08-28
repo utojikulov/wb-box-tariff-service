@@ -1,4 +1,4 @@
-import { ITariffMeta } from "../../common/types/tariffmeta.interface";
+import { ITariffMeta } from "../types/tariff.interface";
 import { TariffRepo } from "../repositories/tariff.repository";
 import { WareHouseRepository } from "../repositories/warehouse.repository";
 
