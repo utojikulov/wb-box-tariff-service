@@ -35,7 +35,9 @@ export class TariffJob {
     }
 
     public start() {
-        nodeCron.schedule("0 * * * *", () => this.save());
+        nodeCron.schedule("0 * * * *", async () => {
+            await this.save()
+        });
         this.save();
-    }
+}
 }

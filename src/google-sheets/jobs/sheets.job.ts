@@ -29,7 +29,7 @@ export class SheetsJob {
         await this.sheetsService.writeData(sheet_title, data)
     }
     public start() {
-        nodeCron.schedule("0 * * * *", () => {
+        nodeCron.schedule("2 * * * *", () => {
             console.log('Syncing google sheets with db...')
             this.fetch()
         })
