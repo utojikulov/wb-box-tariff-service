@@ -4,8 +4,8 @@ services:
     container_name: postgres_wb
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PWD}
 
     ports:
       - 5433:5432
@@ -14,10 +14,11 @@ services:
       - ./data:/var/lib/postgresql/data
 
     healthcheck:
-      test: pg_isready -U postgres
+      test: pg_isready -U ${POSTGRES_USER}
       interval: 10s
       timeout: 3s
       retries: 3
+
     networks:
         - wb-tariffs
 

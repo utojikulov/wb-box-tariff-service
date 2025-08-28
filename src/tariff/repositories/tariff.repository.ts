@@ -18,9 +18,24 @@ export class TariffRepo {
     }
 
     async getTariffsSorted() {
-        return this.db("warehouse_tariffs").
-            // .join()
-            // .select()
-            // .orderBy();
+        return this.db("warehouse_tariffs as wt")
+            .join("tariff_meta as tm", "wt.tariff_meta_id", "tm.id")
+            .select(
+                "wt.id",
+                "wt.warehouse_name",
+                "wt.geo_name",
+                "wt.box_delivery_base",
+                "wt.box_delivery_coef_expr",
+                "wt.box_delivery_liter",
+                "wt.box_delivery_marketplace_base",
+                "wt.box_delivery_marketplace_coef_expr",
+                "wt.box_delivery_marketplace_liter",
+                "wt.box_storage_base",
+                "wt.box_storage_coef_expr",
+                "wt.box_storage_liter",
+                "tm.dt_next_box",
+                "tm.dt_till_max"
+            )
+            .orderBy("wt.box_delivery_coef_expr", "asc")
     }
 }

@@ -1,6 +1,7 @@
 export interface ITariffMeta extends IWarehouseList {
     dtNextBox: string
     dtTillMax: string
+    warehouseList: IWarehouseList[]
 }
 
 export interface IWarehouseList {

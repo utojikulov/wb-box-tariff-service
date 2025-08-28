@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import { google} from "googleapis";
 import { ConfigService } from '../../config/env/config.service';
+import { sheets } from 'googleapis/build/src/apis/sheets';
 
 export class SheetsService {
     private sheets
@@ -23,6 +24,7 @@ export class SheetsService {
     async createSheet(title: string) {
         try {
             await this.sheets.spreadsheets.batchUpdate({
+                spreadsheetId: this.configService.get("SPREADSHEET_ID"),
                 requestBody: {
                     requests: [{
                         addSheet: {
@@ -45,9 +47,11 @@ export class SheetsService {
             const headers = Object.keys(rows[0]);
             const values = [headers, ...rows.map((row) => Object.values(row))];
 
+            await this.setupHeaders(sheetTitle)
+
             await this.sheets.spreadsheets.values.update({
-                spreadsheetId: process.env.SPREADSHEET_ID!,
-                range: `${sheetTitle}!A1`,
+                spreadsheetId: this.configService.get('SPREADSHEET_ID'),
+                range: `${sheetTitle}!A2`,
                 valueInputOption: "RAW",
                 requestBody: { values },
             });
@@ -56,5 +60,42 @@ export class SheetsService {
         }
     }
 
-    async formatHeaders() {}
+    async sheetExists(sheetTitle: string) {
+        try {
+            const spreadsheet = await this.sheets.spreadsheets.get({
+               spreadsheetId: this.configService.get('SPREADSHEET_ID')
+            })
+
+            const sheets = spreadsheet.data.sheets || []
+            return sheets.some(s => s.properties?.title === sheetTitle)
+        } catch (error) {
+            console.error('something went wrong while validating the sheet', error)
+        }
+    }
+
+    private async setupHeaders(sheetName: string): Promise<void> {
+        const headers = [[
+            'ID',
+            'Склад',
+            'Регион',
+            'Базовая доставка',
+            'Коэфф. доставки',
+            'Доставка за литр',
+            'Базовая MP',
+            'Коэфф. MP',
+            'MP за литр',
+            'Базовое хранение',
+            'Коэфф. хранения',
+            'Хранение за литр',
+            'Дата следующего бокса',
+            'Дата окончания'
+        ]];
+
+        await this.sheets.spreadsheets.values.update({
+            spreadsheetId: this.configService.get("SPREADSHEET_ID"),
+            range: `${sheetName}!A1:N1`,
+            valueInputOption: 'RAW',
+            requestBody: { values: headers }
+        });
+    }
 }
