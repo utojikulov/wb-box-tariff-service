@@ -8,7 +8,7 @@ export class ApiClient {
         this.configService = new ConfigService() 
     }
 
-    async getTariffs() {
+    async getTariffs(date: string = new Date().toISOString().split("T")[0]) {
         const response = await axios.get(
             this.configService.get('ENDPOINT'),
             {
@@ -16,7 +16,7 @@ export class ApiClient {
                     'Authorization': this.configService.get('WB_API_KEY') 
                 },
                 params: {
-                    date: new Date().toISOString().split("T")[0]
+                    date
                 }
             },
 

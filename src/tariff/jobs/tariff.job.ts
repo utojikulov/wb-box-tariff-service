@@ -5,6 +5,7 @@ import { TariffService } from "../services/tariff.service";
 export class TariffJob {
     private apiClient: ApiClient;
     private tariffService: TariffService;
+    private lastSave: Date | null = null
 
     constructor() {
         this.apiClient = new ApiClient();
@@ -23,9 +24,9 @@ export class TariffJob {
 
             await this.tariffService.save(tariffData);
 
-            console.log(
-                `[${new Date().toISOString()}] Tariffs updated successfully`,
-            );
+            this.lastSave = new Date()
+            console.log(`[${new Date().toISOString()}] Tariffs updated successfully`);
+
         } catch (error) {
             console.error(
                 `[${new Date().toISOString()}] Error occured when updateing tariffs:`,
@@ -39,5 +40,5 @@ export class TariffJob {
             await this.save()
         });
         this.save();
-}
+    }
 }

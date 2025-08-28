@@ -5,6 +5,7 @@ import { TariffRepo } from "../../tariff/repositories/tariff.repository";
 export class SheetsJob {
     private sheetsService: SheetsService
     private tariffRepo: TariffRepo
+    private lastWrite: Date | null = null
 
     constructor() {
         this.tariffRepo = new TariffRepo()
@@ -25,11 +26,15 @@ export class SheetsJob {
             await this.sheetsService.createSheet(sheet_title)
             console.log(`Created a new sheet: ${sheet_title}`)
         }
-        
+
         await this.sheetsService.writeData(sheet_title, data)
+
+        this.lastWrite = new Date()
+        console.log(`[${this.lastWrite.toISOString()}] Data written to sheet: ${sheet_title}`)
     }
+
     public start() {
-        nodeCron.schedule("2 * * * *", () => {
+        nodeCron.schedule("3 * * * *", () => {
             console.log('Syncing google sheets with db...')
             this.fetch()
         })
