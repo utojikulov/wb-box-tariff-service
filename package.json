@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "ts-node ./src/main.ts",
         "build": "tsc",
-        "start": "nodemon ./dist/main.js",
+        "start": "node ./dist/main.js",
         "migrate": "knex migrate:latest --knexfile dist/knex/knexfile.js"
     },
     "keywords": [],
